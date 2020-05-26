@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+// ul{
+//     display: grid;
+//     grid-template-columns: 1fr 2fr;
+// }
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-gap: 0.1rem;
+}
+.sent{
+    color:green;
+    // float:left;
+    display: block;
+    // color: green($color: #000000);
+}
+.replies{
+    color:burlywood;
+    // float: right;
+    li{
+        display: block;
+        margin: 0 10px; 
+        width:50%;
+        // display: inline;
+    }
+}

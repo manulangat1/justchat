@@ -64,10 +64,13 @@
             // console.log(message.content)
             var msgListTag = document.createElement('li');
             var pTag = document.createElement('p')
+            var lTag = document.createElement('p')
             pTag.textContent = data.content;
+            lTag.textContent = data.author;
             console.log(pTag.textContent)
             // const data = JSON.parse(e.data);
             msgListTag.appendChild(pTag)
+            // msgListTag.appendChild(lTag)
             console.log(msgListTag)
             document.querySelector('#chat-log').appendChild(msgListTag);
         }
