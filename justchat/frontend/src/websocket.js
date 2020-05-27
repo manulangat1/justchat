@@ -1,4 +1,3 @@
-
 class WebSocketService{
     static instance = null
     callbacks = {}
@@ -12,8 +11,9 @@ class WebSocketService{
         this.socketRef = null;
     }
 
-    connect(){
-        const path = "ws://127.0.0.1:8000/ws/chat/manu/"
+    connect(chatUrl){
+        const path = `ws://127.0.0.1:8000/ws/chat/${chatUrl}/`
+        console.log(path)
         this.socketRef = new WebSocket(path)
         this.socketRef.onopen = () => {
             console.log('web open')
@@ -34,6 +34,9 @@ class WebSocketService{
             this.connect();
         }
     }
+    disconnect(){
+        this.socketRef.close()
+    }
     socketNewMessage(data){
         const parseData = JSON.parse(data)
         const command = parseData.command
@@ -47,11 +50,18 @@ class WebSocketService{
             this.callbacks[command](parseData.message)
         }
     }
-    fetchMessages(username){
-        this.sendMessage({command:'messages',username:username})
+    fetchMessages(username,chatId){
+        console.log("u",username)
+        console.log(chatId)
+        this.sendMessage({command:'messages',username:username,chatId:chatId})
     }
     newChatMessage(message){
-        this.sendMessage({command:'new_message',from:message.from,message:message.content})
+        console.log(message)
+        this.sendMessage({command:'new_message',
+                from:message.from,
+                message:message.content,
+                chatId:message.chatId
+            })
     }
     addCallbacks(messagesCallback,newMessageCallback){
         this.callbacks['messages'] = messagesCallback

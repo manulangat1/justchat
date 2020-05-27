@@ -1,43 +1,22 @@
 import React from 'react'
 import WebSocketInstance from '../../websocket'
 import '../../styles/main.scss'
-import Sidepanel from './Sidepanel'
 import { connect } from 'react-redux'
-class Chat extends React.Component{
+class Home extends React.Component{
     user = "manulangat"
-    state = {
-        messages:[],
-        message:''
-    }
-    initialiseChat(){
-        if (this.props.user){
-            this.waitForSocketConnection(() => {
-                WebSocketInstance.addCallbacks(this.setMessages.bind(this),
-                this.addMessage.bind(this),
-                WebSocketInstance.fetchMessages(this.props.user.username,this.props.match.params.chatID)
-                )
-            })
-            // WebSocketInstance.connect(this.props.match.params.chatID)
-        }
-    }
     constructor(props){
         super(props)
-        this.initialiseChat()
+        this.state = {
+            messages:[],
+            message:''
         }
-    componentWillReceiveProps(newProps){
-    //    if (this.props.match.params.chatID !== newProps.match.params.chatID ){
-    //        WebSocketInstance.disconnect()
-    //        console.log("new",newProps)
-    //     this.initialiseChat()
-    //     //    this.waitForSocketConnection(() => {
-    //     //     WebSocketInstance.addCallbacks(this.setMessages.bind(this),
-    //     //     this.addMessage.bind(this),
-    //     //     WebSocketInstance.fetchMessages(this.props.user.username,this.props.match.params.chatID)
-    //     //     )
-    //     // })
-    //    }
-        console.log("new",newProps)
-        this.initialiseChat()
+        this.waitForSocketConnection(() => {
+            WebSocketInstance.addCallbacks(this.setMessages.bind(this),
+            this.addMessage.bind(this),
+            // WebSocketInstance.fetchMessages(this.props.currentUser)
+            )
+        })
+        // WebSocketInstance.connect(this.props.match.params.chatID)
     }
     componentDidMount(){
         console.log(this.props.user.username)
@@ -48,8 +27,7 @@ class Chat extends React.Component{
         const { user} = this.props.user.username
         const message = {
             from:this.props.user.username,
-            content:this.state.message,
-            chatId:this.props.match.params.chatID
+            content:this.state.message
         }
         WebSocketInstance.newChatMessage(message)
         this.setState({
@@ -133,9 +111,6 @@ class Chat extends React.Component{
         return(
             <section id="chat">
                 <div className="container">
-                    <div className="grid">
-                        <Sidepanel />
-                        <div>
                 <ul>
                     {
                         messages && 
@@ -152,8 +127,6 @@ class Chat extends React.Component{
                     <input type="text"  className="form-control" onChange={this.onChange} value={message} name="message"/>
                 </form>
                 </div>
-                </div>
-                </div>
             </section>
         )
     }
@@ -161,4 +134,4 @@ class Chat extends React.Component{
 const mapStateToProps = state => ({
     user:state.auth.user
 })
-export default connect(mapStateToProps,null)(Chat)
+export default connect(mapStateToProps,null)(Home)
