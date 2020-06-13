@@ -28,8 +28,6 @@ class App extends React.Component{
                     <Header />
                     <Switch>
                         <PrivateRoute exact path="/" component={Dashboard}/>
-                       
-                        {/* <PrivateRoute exact path="/:chatURL/" component={Dashboard}/> */}
                         <Route exact path="/login" component={Login} />
                         <Route exact path="/register" component={Register} />
                         <PrivateRoute exact path="/:chatID" component={Chat}/>

@@ -148,9 +148,14 @@ class Chat extends React.Component{
               }}
             />
                 </ul>
-                <form onSubmit={this.onSubmit} className="form">
+                {
+                    messages ? (
+                        <form onSubmit={this.onSubmit} className="form">
                     <input type="text"  className="form-control" onChange={this.onChange} value={message} name="message"/>
                 </form>
+                    )   : ''
+                }
+                
                 </div>
                 </div>
                 </div>

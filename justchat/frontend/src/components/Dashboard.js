@@ -12,8 +12,6 @@ class Dashboard extends React.Component{
         return(
             <main className="container">
                 <div className="grid">
-                {/* <Sidepanel /> */}
-                {/* <Home /> */}
                 <Chat />
                 </div>
             </main>
